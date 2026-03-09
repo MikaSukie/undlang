@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-DSYNC  —  Dead Simple Sync
+DSYNC ,  Dead Simple Sync
 A git helper that works with GitHub, Codeberg, Forgejo, Gitea,
-GitLab, self-hosted forges — anything git speaks to.
+GitLab, self-hosted forges, anything git speaks to.
 
 Usage:
     python DSYNC.py [command] [--remote <name>] [--all-remotes]
@@ -114,7 +114,7 @@ def load_config():
                 data.setdefault(k, v)
             return data
         except Exception:
-            warn("Could not parse .dsync.json — using defaults.")
+            warn("Could not parse .dsync.json, using defaults.")
     return dict(DEFAULT_CONFIG)
 
 def save_config(cfg):
@@ -203,11 +203,11 @@ def resolve_conflicts():
 
     print("""
 Options:
-  [1] Abort merge/rebase — reset to clean state
+  [1] Abort merge/rebase, reset to clean state
   [2] Keep OUR version for all files
   [3] Keep THEIR version for all files
   [4] Open each file in $EDITOR manually
-  [q] Quit — fix manually""")
+  [q] Quit, fix manually""")
 
     choice = safe_input("\nChoice [1/2/3/4/q]: ", "q").lower()
 
@@ -321,7 +321,7 @@ def cmd_init(args):
             ensure_remote_protocol(cfg, r)
             res = run(f"git push -u {r} {branch}")
             if res.returncode != 0:
-                warn(f"Push to '{r}' failed — check auth / remote setup.")
+                warn(f"Push to '{r}' failed, check auth / remote setup.")
 
     ok(f"Repo initialized on branch '{branch}'.")
 
@@ -338,7 +338,7 @@ def cmd_commit(args):
 
     dirty = run("git status --porcelain", capture=True).stdout.strip()
     if not dirty:
-        warn("Working tree clean — nothing to commit.")
+        warn("Working tree clean, nothing to commit.")
         if safe_input("Create empty commit? [y/N] ", "n").lower() not in ("y", "yes"):
             return
 
@@ -396,7 +396,7 @@ def cmd_pull(args):
 
     # Resolve any pre-existing conflicts first
     if get_unmerged_files():
-        err("Unmerged files detected — resolve before pulling.")
+        err("Unmerged files detected, resolve before pulling.")
         resolved = resolve_conflicts()
         if not resolved and get_unmerged_files():
             err("Still unresolved. Cannot pull."); return
@@ -744,7 +744,7 @@ def cmd_sync(args):
         if res.returncode != 0:
             warn("Commit failed."); return
     else:
-        ok("Nothing new to commit — skipping commit step.")
+        ok("Nothing new to commit, skipping commit step.")
 
     # Pull first to avoid push rejection
     remote = cfg["default_remote"]
@@ -754,7 +754,7 @@ def cmd_sync(args):
             remote = args[idx + 1]
 
     if get_unmerged_files():
-        err("Unmerged files — resolve before syncing.")
+        err("Unmerged files, resolve before syncing.")
         resolve_conflicts()
         if get_unmerged_files(): return
 
@@ -770,7 +770,7 @@ def cmd_sync(args):
             else:
                 run(f"git pull --no-rebase --allow-unrelated-histories {remote} {branch}")
             if get_unmerged_files():
-                warn("New conflicts after pull — resolve then re-run DSYNC sync.")
+                warn("New conflicts after pull, resolve then re-run DSYNC sync.")
                 resolve_conflicts()
                 return
     except ValueError:
@@ -799,7 +799,7 @@ COMMANDS = {
 }
 
 def print_help():
-    print(f"\nDSYNC v{VERSION}  —  Dead Simple Sync\n")
+    print(f"\nDSYNC v{VERSION} ,  Dead Simple Sync\n")
     print("Works with GitHub, Codeberg, Forgejo, Gitea, GitLab,")
     print("or any self-hosted forge.\n")
     print("Usage:")
@@ -819,7 +819,7 @@ or commit it to share settings with collaborators.
 """)
 
 def interactive_menu():
-    print(f"\n  DSYNC v{VERSION}  —  Dead Simple Sync\n")
+    print(f"\n  DSYNC v{VERSION} ,  Dead Simple Sync\n")
     keys = list(COMMANDS.keys())
     for i, (k, (_, desc)) in enumerate(COMMANDS.items(), 1):
         print(f"  [{i:>2}]  {k:<10}  {desc}")
