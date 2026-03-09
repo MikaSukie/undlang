@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "default_remote": "origin",
+  "ssh_remotes": [
+    "origin"
+  ],
+  "https_remotes": [],
+  "push_to_all": false,
+  "default_branch": "main",
+  "sign_commits": false,
+  "notes": ""
+}

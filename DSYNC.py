@@ -430,7 +430,7 @@ def cmd_pull(args):
     if mode == "r":
         res = run(f"git pull --rebase {remote} {branch}")
     else:
-        res = run(f"git pull {remote} {branch}")
+        res = run(f"git pull --no-rebase --allow-unrelated-histories {remote} {branch}")
 
     if res.returncode != 0:
         warn("Pull failed. Re-run DSYNC to resolve new conflicts.")
@@ -768,7 +768,7 @@ def cmd_sync(args):
             if mode == "r":
                 run(f"git pull --rebase {remote} {branch}")
             else:
-                run(f"git pull {remote} {branch}")
+                run(f"git pull --no-rebase --allow-unrelated-histories {remote} {branch}")
             if get_unmerged_files():
                 warn("New conflicts after pull — resolve then re-run DSYNC sync.")
                 resolve_conflicts()
